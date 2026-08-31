@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "hole19-site",
+      "runtimeExecutable": "ruby",
+      "runtimeArgs": [
+        "-run",
+        "-e",
+        "httpd",
+        "/private/tmp/claude-501/-Users-teddykim-Desktop--------/4e16f927-7f12-4a76-8c3f-026b09f6085a/scratchpad/hole19-preview",
+        "-p",
+        "8791"
+      ],
+      "port": 8791
+    }
+  ]
+}
