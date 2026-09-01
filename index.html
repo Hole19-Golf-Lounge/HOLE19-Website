@@ -25,9 +25,42 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=36">
+<link rel="stylesheet" href="css/style.css?v=40">
 </head>
 <body>
+
+<!-- ===================== PROMO POPUP ===================== -->
+<div class="promo-modal" id="promoModal">
+  <div class="promo-modal-backdrop" id="promoModalBackdrop"></div>
+  <div class="promo-modal-content">
+    <div class="promo-posters" id="promoPosters">
+      <div class="promo-card promo-card-en" id="promoCardEn">
+        <img src="assets/Tournament-EN.jpg" alt="HOLE19 Screen Golf Team Tournament poster (English)" class="promo-poster" data-full="assets/Tournament-EN.jpg">
+        <div class="promo-card-actions">
+          <button class="promo-mini-btn promo-mini-snooze" type="button" data-card="en">
+            <span class="lang-en">2h snooze</span><span class="lang-ko">2시간 안보기</span>
+          </button>
+          <button class="promo-mini-btn promo-mini-close" type="button" data-card="en" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="promo-card promo-card-ko" id="promoCardKo">
+        <img src="assets/Tournament-KO.jpg" alt="HOLE19 팀대항 스크린골프 토너먼트 포스터" class="promo-poster" data-full="assets/Tournament-KO.jpg">
+        <div class="promo-card-actions">
+          <button class="promo-mini-btn promo-mini-snooze" type="button" data-card="ko">
+            <span class="lang-en">2h snooze</span><span class="lang-ko">2시간 안보기</span>
+          </button>
+          <button class="promo-mini-btn promo-mini-close" type="button" data-card="ko" aria-label="Close">✕</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fullscreen poster lightbox -->
+<div class="promo-lightbox" id="promoLightbox">
+  <button class="promo-lightbox-close" id="promoLightboxClose" type="button" aria-label="Close">✕</button>
+  <img src="" alt="" class="promo-lightbox-img" id="promoLightboxImg">
+</div>
 
 <!-- ===================== HEADER ===================== -->
 <header class="site-header" id="siteHeader">
@@ -840,6 +873,6 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=8"></script>
+<script src="js/main.js?v=10"></script>
 </body>
 </html>

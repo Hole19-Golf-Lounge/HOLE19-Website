@@ -1,6 +1,65 @@
 // HOLE19 GOLF LOUNGE — site interactions
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ---------- Promo popup (tournament poster) ---------- */
+  const promoModal = document.getElementById('promoModal');
+  const promoSnoozeKey = 'hole19_promo_snooze_until';
+
+  if (promoModal) {
+    let snoozeUntil = 0;
+    try { snoozeUntil = parseInt(localStorage.getItem(promoSnoozeKey), 10) || 0; } catch (e) {}
+
+    if (Date.now() > snoozeUntil) {
+      promoModal.classList.add('open');
+    }
+
+    const promoCards = {
+      en: document.getElementById('promoCardEn'),
+      ko: document.getElementById('promoCardKo')
+    };
+    let snoozeRequested = false;
+
+    const finishPromo = () => {
+      if (snoozeRequested) {
+        try { localStorage.setItem(promoSnoozeKey, String(Date.now() + 2 * 60 * 60 * 1000)); } catch (e) {}
+      }
+      promoModal.classList.remove('open');
+    };
+
+    const dismissCard = (key) => {
+      promoCards[key]?.classList.add('dismissed');
+      const allDismissed = Object.values(promoCards).every(c => !c || c.classList.contains('dismissed'));
+      if (allDismissed) finishPromo();
+    };
+
+    document.querySelectorAll('.promo-mini-close').forEach(btn => {
+      btn.addEventListener('click', () => dismissCard(btn.dataset.card));
+    });
+    document.querySelectorAll('.promo-mini-snooze').forEach(btn => {
+      btn.addEventListener('click', () => { snoozeRequested = true; dismissCard(btn.dataset.card); });
+    });
+    document.getElementById('promoModalBackdrop')?.addEventListener('click', () => {
+      Object.values(promoCards).forEach(c => c?.classList.add('dismissed'));
+      finishPromo();
+    });
+
+    /* Fullscreen poster lightbox */
+    const promoLightbox = document.getElementById('promoLightbox');
+    const promoLightboxImg = document.getElementById('promoLightboxImg');
+    document.querySelectorAll('.promo-poster').forEach(img => {
+      img.addEventListener('click', () => {
+        promoLightboxImg.src = img.dataset.full || img.src;
+        promoLightboxImg.alt = img.alt;
+        promoLightbox.classList.add('open');
+      });
+    });
+    const closeLightbox = () => promoLightbox.classList.remove('open');
+    document.getElementById('promoLightboxClose')?.addEventListener('click', closeLightbox);
+    promoLightbox?.addEventListener('click', (e) => {
+      if (e.target === promoLightbox) closeLightbox();
+    });
+  }
+
   /* ---------- Header scroll state ---------- */
   const header = document.getElementById('siteHeader');
   const onScroll = () => {
