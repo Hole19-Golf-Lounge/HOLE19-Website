@@ -379,6 +379,19 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
 .scroll-cue .line { width: 1px; height: 46px; background: linear-gradient(var(--gold-light), transparent); animation: scrollcue 2s ease-in-out infinite; }
 @keyframes scrollcue { 0% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.2; } }
 
+/* Desktop: fit the whole hero (headline through the grass CTA band) within
+   one screen, roughly a 16:9–16:10 frame, instead of overflowing past the
+   fold on typical laptop/desktop window heights. */
+@media (min-width: 961px) {
+  .hero { height: 100vh; min-height: 620px; max-height: 1080px; }
+  .hero-top { padding: 56px 24px 12px; }
+  .hero-mark { width: 76px; margin-bottom: 20px; }
+  .hero-eyebrow { margin-bottom: 16px; }
+  .hero .hero-tagline { margin: 14px 0 16px; }
+  .hero p.desc { margin-bottom: 20px; }
+  .hero-cta-band { min-height: clamp(200px, 20vw, 320px); padding: 18px 24px 28px; }
+}
+
 /* ==========================================================================
    About
    ========================================================================== */
@@ -501,9 +514,11 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
    Explore More (Flushing Billiards)
    ========================================================================== */
 .explore { padding: 130px 0 0; background: var(--bg); position: relative; }
-.explore-text { max-width: 760px; }
-.explore-logo { height: 38px; width: auto; display: block; margin: 20px 0 22px; }
+.explore-text { max-width: 760px; margin: 0 auto; text-align: center; }
+.explore-logo { height: 38px; width: auto; display: block; margin: 20px auto 22px; }
 .explore-text p { color: var(--body); font-size: 15.5px; line-height: 1.75; hyphens: none; -webkit-hyphens: none; word-break: keep-all; overflow-wrap: break-word; }
+.explore-text .section-title { max-width: 100%; }
+.explore-text .divider { margin-left: auto; margin-right: auto; }
 .about-filmstrip, .explore-filmstrip {
   position: relative;
   margin-top: 70px;
@@ -726,7 +741,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
 /* ==========================================================================
    Rates
    ========================================================================== */
-.rates { padding: 130px 0; background: var(--bg); }
+.rates { padding: 130px 0 70px; background: var(--bg); }
 
 .rates-tables-wrap { display: flex; flex-direction: column; gap: 26px; margin-top: 60px; }
 
