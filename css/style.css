@@ -522,10 +522,11 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
 .menu-tabs {
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 14px 6px;
   margin: 50px 0 10px;
   flex-wrap: wrap;
 }
+.menu-tabs-break { flex-basis: 100%; height: 0; }
 .menu-tab {
   font-family: var(--font-accent);
   font-size: 12px;
@@ -990,6 +991,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
   }
   .menu-tabs::-webkit-scrollbar { display: none; }
   .menu-tab { flex: 0 0 auto; white-space: nowrap; padding: 11px 20px; font-size: 11px; }
+  .menu-tabs-break { display: none; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 34px; }
 
   .rate-table-3col { grid-template-columns: 1fr; }

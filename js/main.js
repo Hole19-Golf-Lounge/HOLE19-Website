@@ -181,26 +181,33 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollTimer = setTimeout(() => { updateDots(); wrapCheck(); }, 80);
     }, { passive: true });
 
-    // Pause auto-advance on interaction, resume after a short idle delay
-    let paused = false;
-    let resumeTimer;
-    const pause = () => { paused = true; clearTimeout(resumeTimer); };
-    const scheduleResume = (delay) => {
-      clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => { paused = false; }, delay == null ? 2200 : delay);
-    };
+    // Pause auto-advance on interaction, resume after a short idle delay.
+    // Timestamp-based (not a paired pause/resume event toggle) so a missed
+    // touchend/touchcancel on mobile can never leave it stuck paused forever.
+    const idleDelay = opts.idleDelay || 2200;
+    let lastInteraction = 0;
+    let hovering = false;
+    const markInteraction = (delay) => { lastInteraction = Date.now() + ((delay || idleDelay) - idleDelay); };
+    const isPaused = () => hovering || (Date.now() - lastInteraction) < idleDelay;
 
-    track.addEventListener('pointerdown', pause, { passive: true });
-    track.addEventListener('touchstart', pause, { passive: true });
-    track.addEventListener('wheel', () => { pause(); scheduleResume(); }, { passive: true });
-    track.addEventListener('pointerup', () => scheduleResume());
-    track.addEventListener('touchend', () => scheduleResume());
-    track.addEventListener('mouseenter', pause);
-    track.addEventListener('mouseleave', () => scheduleResume(300));
+    // NOTE: only bind to direct user-input events, never the 'scroll' event
+    // itself — our own auto-scroll increments also fire 'scroll', and
+    // treating those as "interaction" would permanently freeze the loop.
+    track.addEventListener('pointerdown', () => markInteraction(), { passive: true });
+    track.addEventListener('touchstart', () => markInteraction(), { passive: true });
+    track.addEventListener('touchmove', () => markInteraction(), { passive: true });
+    track.addEventListener('wheel', () => markInteraction(), { passive: true });
 
-    dots?.forEach((dot, i) => dot.addEventListener('click', () => { pause(); goTo(i); scheduleResume(3000); }));
-    prevBtn?.addEventListener('click', () => { pause(); goTo(currentIndex() - 1); scheduleResume(3000); });
-    nextBtn?.addEventListener('click', () => { pause(); goTo(currentIndex() + 1); scheduleResume(3000); });
+    // Hover-pause only where hover is a real pointer capability (skip touch,
+    // where browsers can emit synthetic mouseenter with no matching mouseleave)
+    if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+      track.addEventListener('mouseenter', () => { hovering = true; });
+      track.addEventListener('mouseleave', () => { hovering = false; markInteraction(300); });
+    }
+
+    dots?.forEach((dot, i) => dot.addEventListener('click', () => { markInteraction(3000); goTo(i); }));
+    prevBtn?.addEventListener('click', () => { markInteraction(3000); goTo(currentIndex() - 1); });
+    nextBtn?.addEventListener('click', () => { markInteraction(3000); goTo(currentIndex() + 1); });
 
     // Continuous seamless auto-scroll
     if (originalCount > 1) {
@@ -215,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (lastTs == null) lastTs = ts;
         const dt = ts - lastTs;
         lastTs = ts;
-        if (!paused && inView && !document.hidden) {
+        if (!isPaused() && inView && !document.hidden) {
           track.scrollLeft += speed * (dt / 1000);
           const half = track.scrollWidth / 2;
           if (half > 0 && track.scrollLeft >= half) track.scrollLeft -= half;
