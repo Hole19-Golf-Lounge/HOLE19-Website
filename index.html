@@ -25,32 +25,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=41">
+<link rel="stylesheet" href="css/style.css?v=42">
 </head>
 <body>
 
 <!-- ===================== PROMO POPUP ===================== -->
+<!-- Flag icons: assets/flag-us.svg, assets/flag-kr.svg — Twemoji graphics, CC-BY 4.0, https://github.com/twitter/twemoji -->
 <div class="promo-modal" id="promoModal">
   <div class="promo-modal-backdrop" id="promoModalBackdrop"></div>
   <div class="promo-modal-content">
     <div class="promo-lang-switch">
-      <button class="promo-flag-btn active" type="button" data-lang="en" aria-label="English poster">🇺🇸</button>
-      <button class="promo-flag-btn" type="button" data-lang="ko" aria-label="한국어 포스터">🇰🇷</button>
+      <button class="promo-flag-btn active" type="button" data-lang="en" aria-label="English poster"><img src="assets/flag-us.svg" alt="US flag" class="promo-flag-img"></button>
+      <button class="promo-flag-btn" type="button" data-lang="ko" aria-label="한국어 포스터"><img src="assets/flag-kr.svg" alt="Korean flag" class="promo-flag-img"></button>
     </div>
-    <img
-      src="assets/Tournament-EN.jpg"
-      data-en="assets/Tournament-EN.jpg"
-      data-ko="assets/Tournament-KO.jpg"
-      alt="HOLE19 Screen Golf Team Tournament poster"
-      class="promo-poster"
-      id="promoPosterImg">
-    <div class="promo-modal-footer">
-      <button class="promo-text-link" id="promoModalSnooze" type="button">
-        <span class="lang-en">Don't show for 2 hours</span><span class="lang-ko">2시간 동안 보지 않기</span>
-      </button>
-      <button class="promo-text-link" id="promoModalClose" type="button">
-        <span class="lang-en">Close</span><span class="lang-ko">닫기</span>
-      </button>
+    <div class="promo-poster-wrap">
+      <img
+        src="assets/Tournament-EN.jpg"
+        data-en="assets/Tournament-EN.jpg"
+        data-ko="assets/Tournament-KO.jpg"
+        alt="HOLE19 Screen Golf Team Tournament poster"
+        class="promo-poster"
+        id="promoPosterImg">
+      <div class="promo-modal-footer">
+        <button class="promo-text-link" id="promoModalSnooze" type="button">
+          <span class="lang-en">Don't show for 2 hours</span><span class="lang-ko">2시간 동안 보지 않기</span>
+        </button>
+        <button class="promo-text-link" id="promoModalClose" type="button">
+          <span class="lang-en">Close</span><span class="lang-ko">닫기</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
