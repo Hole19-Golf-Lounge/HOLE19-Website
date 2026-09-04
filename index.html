@@ -23,9 +23,9 @@
 <link rel="icon" type="image/png" href="assets/logo-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&family=Luckiest+Guy&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=42">
+<link rel="stylesheet" href="css/style.css?v=52">
 </head>
 <body>
 
@@ -67,7 +67,7 @@
 <!-- ===================== HEADER ===================== -->
 <header class="site-header" id="siteHeader">
   <div class="container">
-    <a href="#home" class="brand">
+    <a href="#home" class="brand" id="headerLogoLink">
       <img src="assets/Logo_BK.png" alt="HOLE19 GOLF LOUNGE" class="brand-logo-h">
     </a>
 
@@ -322,7 +322,7 @@
         </button>
         <div class="promo-overlay"></div>
         <div class="promo-content">
-          <span class="promo-tag"><span class="lang-en">Opening Special!</span><span class="lang-ko">오픈특가!</span></span>
+          <img src="assets/special-discount.png" alt="Opening Special!" class="promo-tag-img">
           <span class="promo-sub"><span class="lang-en">Any day, any time</span><span class="lang-ko">요일·시간 상관없이</span></span>
           <span class="promo-big"><span class="lang-en">18 Hole $40<small>/h</small></span><span class="lang-ko">18홀 $40<small>/h</small></span></span>
         </div>
@@ -389,7 +389,7 @@
         </button>
         <div class="promo-overlay"></div>
         <div class="promo-content">
-          <span class="promo-tag"><span class="lang-en">Opening Bonus!</span><span class="lang-ko">오픈혜택!</span></span>
+          <img src="assets/extra-bonus.png" alt="Opening Bonus!" class="promo-tag-img promo-tag-img-round">
           <span class="promo-sub"><span class="lang-en">Any day, any time</span><span class="lang-ko">요일·시간 상관없이</span></span>
           <span class="promo-big promo-big-sm"><span class="lang-en">Extra 30min free with<br>1&#8209;hour session</span><span class="lang-ko">1시간 연습시 +30분 추가 제공!</span></span>
         </div>
@@ -781,28 +781,13 @@
         </div>
 
         <div class="info-row">
-          <div class="i-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
-          <div>
-            <h4><span class="lang-en">HOURS</span><span class="lang-ko">영업시간</span></h4>
-            <div class="hours-table">
-              <div><span><span class="lang-en">MON</span><span class="lang-ko">월요일</span></span><span>9:00 AM – 12:00 AM</span></div>
-              <div><span><span class="lang-en">TUE</span><span class="lang-ko">화요일</span></span><span>9:00 AM – 12:00 AM</span></div>
-              <div><span><span class="lang-en">WED</span><span class="lang-ko">수요일</span></span><span>9:00 AM – 12:00 AM</span></div>
-              <div><span><span class="lang-en">THU</span><span class="lang-ko">목요일</span></span><span>9:00 AM – 12:00 AM</span></div>
-              <div><span><span class="lang-en">FRI</span><span class="lang-ko">금요일</span></span><span>9:00 AM – 12:00 AM</span></div>
-              <div><span class="hr-sat"><span class="lang-en">SAT</span><span class="lang-ko">토요일</span></span><span>9:00 AM – 12:00 AM</span></div>
-              <div><span class="hr-sun"><span class="lang-en">SUN</span><span class="lang-ko">일요일</span></span><span>9:00 AM – 12:00 AM</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-row">
           <div class="i-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"/></svg></div>
           <div>
             <h4><span class="lang-en">SOCIAL MEDIA</span><span class="lang-ko">소셜미디어</span></h4>
             <div class="social-row">
               <a href="https://www.instagram.com/hole19_golflounge/" target="_blank" rel="noopener" aria-label="HOLE19 on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" stroke="none"/></svg></a>
               <a href="https://www.facebook.com/hole19golflounge/" target="_blank" rel="noopener" aria-label="HOLE19 on Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 8.2h-1.6c-.7 0-1.4.5-1.4 1.4V11h3l-.5 3h-2.5v7h-3v-7H7v-3h1.9V9.1C8.9 6.8 10.3 5 12.7 5H15v3.2Z"/></svg></a>
+              <a href="https://www.threads.com/@hole19_golflounge?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener" aria-label="HOLE19 on Threads"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.263 11.097c-.03-3.486-1.92-5.586-5.111-5.586-2.13 0-3.922.963-4.863 2.499l2.062 1.438c.535-.843 1.272-1.543 2.628-1.543 1.528 0 2.318.85 2.544 2.431a15 15 0 0 0-2.236-.173c-4.125 0-6.068 1.867-6.068 4.336s1.943 3.99 4.804 3.99c3.139 0 5.013-2.115 5.781-4.735.798.361 1.348 1.204 1.348 2.47 0 3.387-3.907 5.232-7.22 5.232-4.885 0-8.077-3.207-8.077-8.424 0-6.392 4.223-10.487 9.9-10.487 3.808 0 5.69 1.671 6.97 3.914l2.108-1.475C21.44 2.078 18.331 0 13.663 0 6.227 0 1.168 5.277 1.168 12.934c0 7 4.953 11.066 10.856 11.066 4.878 0 9.809-2.846 9.809-7.716 0-2.545-1.46-4.231-3.569-5.187m-6.33 4.855c-1.077 0-2.026-.512-2.026-1.453 0-1.483 1.822-1.934 3.606-1.934.678 0 1.34.045 1.927.173-.422 1.927-1.671 3.215-3.508 3.214Z"/></svg></a>
             </div>
           </div>
         </div>
@@ -817,6 +802,46 @@
     <h2><span class="lang-en">Reserve Your Moment at HOLE19</span><span class="lang-ko">지금, HOLE19에서 특별한 순간을 예약하세요</span></h2>
     <p><span class="lang-en">From private bay reservations to group outings, we're always ready to welcome you.</span><span class="lang-ko">프라이빗 베이 예약부터 단체 모임까지 언제든 환영합니다.</span></p>
     <a href="tel:+19297660088" class="btn btn-gold"><span class="lang-en">Call to Reserve</span><span class="lang-ko">전화로 예약하기</span></a>
+  </div>
+</section>
+
+<!-- ===================== EXPLORE MORE ===================== -->
+<section class="explore" id="explore">
+  <div class="container">
+    <div class="explore-text reveal">
+      <div class="eyebrow"><span class="lang-en">EXPLORE MORE</span><span class="lang-ko">더 알아보기</span></div>
+      <h2 class="section-title">
+        <span class="lang-en">Play Golf, Then Rack 'Em Up</span>
+        <span class="lang-ko">골프도 치고, 당구도 한 곳에서</span>
+      </h2>
+      <div class="divider"></div>
+      <img src="assets/billiards-logo.png" alt="Flushing Billiards / 플러싱 당구장" class="explore-logo">
+      <p>
+        <span class="lang-en">Right on the same floor, in its own dedicated space, Flushing Billiards is cleaner and more modern than any pool hall around. As the first in NYC to bring in the Billizone system, every table comes with an electronic scoreboard and its own camera for instant slow-motion replay. Play a round of golf, then rack up a game of pool — all without ever leaving the building.</span>
+        <span class="lang-ko">같은 층, 별도로 마련된 공간에 자리한 플러싱 당구장. 어느 당구장보다 깔끔하고 최신식인 이곳은 뉴욕 최초로 '빌리존(Billizone)' 시스템을 도입해, 모든 테이블에 전자식 점수판과 슬로우모션 다시보기가 가능한 개별 카메라를 갖췄습니다. 골프 한 라운드 즐기고, 건물을 나서지 않고 바로 당구까지 즐겨보세요.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="explore-filmstrip reveal">
+    <div class="photo-slider">
+      <div class="photo-slider-track" id="exploreSliderTrack">
+        <div class="photo-slide"><img src="assets/Billiards-1.jpg" alt="Flushing Billiards pool tables" loading="lazy"></div>
+        <div class="photo-slide"><img src="assets/Billiards-2.jpg" alt="Flushing Billiards players" loading="lazy"></div>
+        <div class="photo-slide"><img src="assets/Billiards-3.jpg" alt="Flushing Billiards drink station" loading="lazy"></div>
+        <div class="photo-slide"><img src="assets/Billiards-Screen1.jpg" alt="Billizone electronic scoreboard system" loading="lazy"></div>
+        <div class="photo-slide"><img src="assets/Billiards-Screen2.jpg" alt="Billizone slow-motion replay camera system" loading="lazy"></div>
+      </div>
+      <button class="slider-arrow prev" id="explorePrev" type="button" aria-label="Previous photo">&#8249;</button>
+      <button class="slider-arrow next" id="exploreNext" type="button" aria-label="Next photo">&#8250;</button>
+      <div class="slider-dots" id="exploreDots">
+        <button class="dot active" type="button" aria-label="Photo 1"></button>
+        <button class="dot" type="button" aria-label="Photo 2"></button>
+        <button class="dot" type="button" aria-label="Photo 3"></button>
+        <button class="dot" type="button" aria-label="Photo 4"></button>
+        <button class="dot" type="button" aria-label="Photo 5"></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -850,7 +875,7 @@
           <li><a href="tel:+19297660088">(929) 766-0088</a></li>
           <li><a href="mailto:cuevlounge@gmail.com">cuevlounge@gmail.com</a></li>
           <li><a href="https://www.google.com/maps/dir/?api=1&destination=154-05+Northern+Blvd%2C+Flushing%2C+NY+11354" target="_blank" rel="noopener">154-05 Northern Blvd, 2F<br>Flushing, NY 11354</a></li>
-          <li><a href="https://www.instagram.com/hole19_golflounge/" target="_blank" rel="noopener">Instagram</a> &middot; <a href="https://www.facebook.com/hole19golflounge/" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://www.instagram.com/hole19_golflounge/" target="_blank" rel="noopener">Instagram</a> &middot; <a href="https://www.facebook.com/hole19golflounge/" target="_blank" rel="noopener">Facebook</a> &middot; <a href="https://www.threads.com/@hole19_golflounge?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">Threads</a></li>
         </ul>
       </div>
 
@@ -875,6 +900,6 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=11"></script>
+<script src="js/main.js?v=13"></script>
 </body>
 </html>

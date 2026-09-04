@@ -6,12 +6,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const promoSnoozeKey = 'hole19_promo_snooze_until';
 
   if (promoModal) {
-    let snoozeUntil = 0;
-    try { snoozeUntil = parseInt(localStorage.getItem(promoSnoozeKey), 10) || 0; } catch (e) {}
+    const isSnoozed = () => {
+      let snoozeUntil = 0;
+      try { snoozeUntil = parseInt(localStorage.getItem(promoSnoozeKey), 10) || 0; } catch (e) {}
+      return Date.now() <= snoozeUntil;
+    };
 
-    if (Date.now() > snoozeUntil) {
+    if (!isSnoozed()) {
       promoModal.classList.add('open');
     }
+
+    /* Header logo → reopen the popup (unless snoozed) when returning home */
+    document.getElementById('headerLogoLink')?.addEventListener('click', () => {
+      if (!isSnoozed()) promoModal.classList.add('open');
+    });
 
     /* Flag toggle: EN default, switch poster image by language */
     const posterImg = document.getElementById('promoPosterImg');
@@ -114,37 +122,108 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- Photo sliders (reusable: About + Reviews) ---------- */
-  function initPhotoSlider(track, dots, prevBtn, nextBtn) {
+  /* ---------- Photo sliders (reusable: About + Reviews + Explore) ----------
+     Auto-advances smoothly when idle; pauses on hover/touch/manual nav;
+     loops seamlessly by duplicating the slide set once and wrapping the
+     scroll position back when it crosses the halfway point. */
+  function initPhotoSlider(track, dots, prevBtn, nextBtn, opts) {
     if (!track) return;
-    const slides = Array.from(track.children);
+    opts = opts || {};
+    const speed = opts.speed || 26; // px per second
+
+    const originalSlides = Array.from(track.children);
+    const originalCount = originalSlides.length;
+    if (!originalCount) return;
+
+    // Duplicate the set once so the loop can wrap without a visible jump
+    if (originalCount > 1) {
+      originalSlides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('a,button').forEach(el => el.setAttribute('tabindex', '-1'));
+        track.appendChild(clone);
+      });
+    }
+
+    const getSlides = () => Array.from(track.children);
+
     const currentIndex = () => {
       const pos = track.scrollLeft;
       let idx = 0, minDist = Infinity;
-      slides.forEach((s, i) => {
+      getSlides().forEach((s, i) => {
         const dist = Math.abs(s.offsetLeft - pos);
         if (dist < minDist) { minDist = dist; idx = i; }
       });
       return idx;
     };
+
     const goTo = (i) => {
-      i = Math.max(0, Math.min(slides.length - 1, i));
+      const slides = getSlides();
+      i = ((i % slides.length) + slides.length) % slides.length;
       track.scrollTo({ left: slides[i].offsetLeft, behavior: 'smooth' });
     };
+
     const updateDots = () => {
       if (!dots || !dots.length) return;
-      const idx = currentIndex();
+      const idx = currentIndex() % originalCount;
       dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     };
+
+    const wrapCheck = () => {
+      if (originalCount <= 1) return;
+      const half = track.scrollWidth / 2;
+      if (track.scrollLeft >= half - 1) track.scrollLeft -= half;
+    };
+
     let scrollTimer;
     track.addEventListener('scroll', () => {
       clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(updateDots, 80);
+      scrollTimer = setTimeout(() => { updateDots(); wrapCheck(); }, 80);
     }, { passive: true });
-    dots?.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
-    prevBtn?.addEventListener('click', () => goTo(currentIndex() - 1));
-    nextBtn?.addEventListener('click', () => goTo(currentIndex() + 1));
-    window.addEventListener('resize', () => { track.scrollLeft = slides[currentIndex()].offsetLeft; });
+
+    // Pause auto-advance on interaction, resume after a short idle delay
+    let paused = false;
+    let resumeTimer;
+    const pause = () => { paused = true; clearTimeout(resumeTimer); };
+    const scheduleResume = (delay) => {
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => { paused = false; }, delay == null ? 2200 : delay);
+    };
+
+    track.addEventListener('pointerdown', pause, { passive: true });
+    track.addEventListener('touchstart', pause, { passive: true });
+    track.addEventListener('wheel', () => { pause(); scheduleResume(); }, { passive: true });
+    track.addEventListener('pointerup', () => scheduleResume());
+    track.addEventListener('touchend', () => scheduleResume());
+    track.addEventListener('mouseenter', pause);
+    track.addEventListener('mouseleave', () => scheduleResume(300));
+
+    dots?.forEach((dot, i) => dot.addEventListener('click', () => { pause(); goTo(i); scheduleResume(3000); }));
+    prevBtn?.addEventListener('click', () => { pause(); goTo(currentIndex() - 1); scheduleResume(3000); });
+    nextBtn?.addEventListener('click', () => { pause(); goTo(currentIndex() + 1); scheduleResume(3000); });
+
+    // Continuous seamless auto-scroll
+    if (originalCount > 1) {
+      let inView = false;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { inView = e.isIntersecting; });
+      }, { threshold: 0.1 });
+      io.observe(track);
+
+      let lastTs = null;
+      const tick = (ts) => {
+        if (lastTs == null) lastTs = ts;
+        const dt = ts - lastTs;
+        lastTs = ts;
+        if (!paused && inView && !document.hidden) {
+          track.scrollLeft += speed * (dt / 1000);
+          const half = track.scrollWidth / 2;
+          if (half > 0 && track.scrollLeft >= half) track.scrollLeft -= half;
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
   }
 
   initPhotoSlider(
@@ -158,6 +237,12 @@ document.addEventListener('DOMContentLoaded', () => {
     null,
     document.getElementById('reviewPrev'),
     document.getElementById('reviewNext')
+  );
+  initPhotoSlider(
+    document.getElementById('exploreSliderTrack'),
+    document.querySelectorAll('#exploreDots .dot'),
+    document.getElementById('explorePrev'),
+    document.getElementById('exploreNext')
   );
 
   /* ---------- Menu tabs ---------- */

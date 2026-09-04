@@ -3,8 +3,9 @@
    Tone: Oatmeal / cream (bright) base, Main color #062f06 (deep green) mixed
    throughout as brand accent, with gold as a luxury highlight.
 
-   Typeface pairing: Orbitron (Latin) + SUIT Variable (Hangul) — a rigid,
-   geometric grid-fit display face, used throughout for display and UI text.
+   Typeface: Poppins (Latin) + SUIT Variable (Hangul) throughout, except the
+   hero "HOLE19" wordmark, which keeps Orbitron (--font-brand) as a one-off
+   brand accent.
    ========================================================================== */
 
 :root {
@@ -40,9 +41,10 @@
   --cream: #f5f1e6;
   --muted: #b9c4b6;
 
-  --font-head: "Orbitron", "SUIT Variable", sans-serif;
-  --font-body: "SUIT Variable", "Orbitron", sans-serif;
-  --font-accent: "Orbitron", "SUIT Variable", sans-serif;
+  --font-brand: "Orbitron", "SUIT Variable", sans-serif;
+  --font-head: "Poppins", "SUIT Variable", sans-serif;
+  --font-body: "SUIT Variable", "Poppins", sans-serif;
+  --font-accent: "Poppins", "SUIT Variable", sans-serif;
 
   --container: 1180px;
   --radius: 4px;
@@ -315,6 +317,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
   margin-bottom: 22px;
 }
 .hero h1 {
+  font-family: var(--font-brand);
   font-weight: 900;
   font-size: clamp(38px, 7.4vw, 88px);
   letter-spacing: 0.02em;
@@ -386,27 +389,18 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
 }
 .about-text { max-width: 760px; }
 
-.about-filmstrip {
-  position: relative;
-  margin-top: 70px;
-  width: 100%;
-  height: clamp(240px, 32vw, 520px);
-  background: var(--green-900);
-}
 .photo-slider { position: relative; width: 100%; height: 100%; }
 .photo-slider-track {
   display: flex;
   width: 100%;
   height: 100%;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   gap: 3px;
 }
 .photo-slider-track::-webkit-scrollbar { display: none; }
-.photo-slide { flex: 0 0 auto; height: 100%; scroll-snap-align: start; }
+.photo-slide { flex: 0 0 auto; height: 100%; }
 .photo-slide img {
   height: 100%;
   width: auto;
@@ -501,6 +495,21 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
   font-size: clamp(17px, 2vw, 21px);
   color: var(--green-700);
   line-height: 1.65;
+}
+
+/* ==========================================================================
+   Explore More (Flushing Billiards)
+   ========================================================================== */
+.explore { padding: 130px 0 0; background: var(--bg); position: relative; }
+.explore-text { max-width: 760px; }
+.explore-logo { height: 38px; width: auto; display: block; margin: 20px 0 22px; }
+.explore-text p { color: var(--body); font-size: 15.5px; line-height: 1.75; hyphens: none; -webkit-hyphens: none; word-break: keep-all; overflow-wrap: break-word; }
+.about-filmstrip, .explore-filmstrip {
+  position: relative;
+  margin-top: 70px;
+  width: 100%;
+  height: clamp(240px, 32vw, 520px);
+  background: var(--green-900);
 }
 
 /* ==========================================================================
@@ -813,18 +822,13 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
   pointer-events: none !important;
 }
 
-.promo-tag {
-  display: inline-block;
-  font-family: var(--font-body);
-  font-weight: 900;
-  font-size: clamp(19px, 2.8vw, 30px);
-  color: #fff6e9;
-  padding: 8px 26px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent-red-light), var(--accent-red) 55%, var(--accent-red-deep));
-  border: 2px solid var(--gold-light);
-  box-shadow: 0 0 0 3px rgba(179,36,28,0.32), 0 12px 26px rgba(0,0,0,0.4);
-  letter-spacing: 0.01em;
+.promo-tag-img {
+  display: block;
+  width: clamp(200px, 26vw, 320px);
+  height: auto;
+}
+.promo-tag-img-round {
+  width: clamp(150px, 19vw, 230px);
 }
 .promo-sub {
   font-family: var(--font-accent);
@@ -974,6 +978,18 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
 
 @media (max-width: 780px) {
   .menu-list { grid-template-columns: 1fr; }
+  .menu-tabs {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 8px;
+    margin: 36px -28px 10px;
+    padding: 0 28px 4px;
+  }
+  .menu-tabs::-webkit-scrollbar { display: none; }
+  .menu-tab { flex: 0 0 auto; white-space: nowrap; padding: 11px 20px; font-size: 11px; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 34px; }
 
   .rate-table-3col { grid-template-columns: 1fr; }
