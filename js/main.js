@@ -13,45 +13,34 @@ document.addEventListener('DOMContentLoaded', () => {
       promoModal.classList.add('open');
     }
 
-    const promoCards = {
-      en: document.getElementById('promoCardEn'),
-      ko: document.getElementById('promoCardKo')
-    };
-    let snoozeRequested = false;
+    /* Flag toggle: EN default, switch poster image by language */
+    const posterImg = document.getElementById('promoPosterImg');
+    const flagBtns = document.querySelectorAll('.promo-flag-btn');
+    flagBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        if (posterImg && posterImg.dataset[lang]) posterImg.src = posterImg.dataset[lang];
+        flagBtns.forEach(b => b.classList.toggle('active', b === btn));
+      });
+    });
 
-    const finishPromo = () => {
-      if (snoozeRequested) {
-        try { localStorage.setItem(promoSnoozeKey, String(Date.now() + 2 * 60 * 60 * 1000)); } catch (e) {}
-      }
-      promoModal.classList.remove('open');
-    };
-
-    const dismissCard = (key) => {
-      promoCards[key]?.classList.add('dismissed');
-      const allDismissed = Object.values(promoCards).every(c => !c || c.classList.contains('dismissed'));
-      if (allDismissed) finishPromo();
+    const closePromo = () => promoModal.classList.remove('open');
+    const snoozePromo = () => {
+      try { localStorage.setItem(promoSnoozeKey, String(Date.now() + 2 * 60 * 60 * 1000)); } catch (e) {}
+      closePromo();
     };
 
-    document.querySelectorAll('.promo-mini-close').forEach(btn => {
-      btn.addEventListener('click', () => dismissCard(btn.dataset.card));
-    });
-    document.querySelectorAll('.promo-mini-snooze').forEach(btn => {
-      btn.addEventListener('click', () => { snoozeRequested = true; dismissCard(btn.dataset.card); });
-    });
-    document.getElementById('promoModalBackdrop')?.addEventListener('click', () => {
-      Object.values(promoCards).forEach(c => c?.classList.add('dismissed'));
-      finishPromo();
-    });
+    document.getElementById('promoModalClose')?.addEventListener('click', closePromo);
+    document.getElementById('promoModalSnooze')?.addEventListener('click', snoozePromo);
+    document.getElementById('promoModalBackdrop')?.addEventListener('click', closePromo);
 
     /* Fullscreen poster lightbox */
     const promoLightbox = document.getElementById('promoLightbox');
     const promoLightboxImg = document.getElementById('promoLightboxImg');
-    document.querySelectorAll('.promo-poster').forEach(img => {
-      img.addEventListener('click', () => {
-        promoLightboxImg.src = img.dataset.full || img.src;
-        promoLightboxImg.alt = img.alt;
-        promoLightbox.classList.add('open');
-      });
+    posterImg?.addEventListener('click', () => {
+      promoLightboxImg.src = posterImg.src;
+      promoLightboxImg.alt = posterImg.alt;
+      promoLightbox.classList.add('open');
     });
     const closeLightbox = () => promoLightbox.classList.remove('open');
     document.getElementById('promoLightboxClose')?.addEventListener('click', closeLightbox);
