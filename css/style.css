@@ -380,22 +380,35 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
 @keyframes scrollcue { 0% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.2; } }
 
 /* Desktop: fit the hero within one screen, roughly a 16:9-16:10 frame,
-   without shrinking the headline or cropping the grass image. The grass
-   band stays a normal (in-flow) flex sibling of the text block — sized by
-   its own true aspect ratio (2000x531), so it's always full width and
-   never cropped — and .hero uses min-height (not a fixed height), so its
-   real height is however tall the text + band actually need to be. On a
-   typical desktop window that sum is <=100vh and everything still fits in
-   exactly one screen; only on an unusually short window does the section
-   grow past 100vh (a small scroll to reach the grass) rather than the two
-   ever overlapping each other. */
+   without shrinking the headline and without cropping the grass image.
+   The grass band is pinned to the bottom of .hero at its own true aspect
+   ratio (2000x531) — always full width, never cropped — while the text
+   block keeps its full size and simply flows from the top. On a short
+   window the two can end up overlapping; a soft light halo behind the
+   tagline/description keeps that text legible over the grass rather than
+   avoiding the overlap by shrinking text or forcing a scroll. */
 @media (min-width: 961px) {
-  .hero { height: auto; min-height: 100vh; }
-  /* flex-basis:auto (not the 0% the "flex:1" shorthand implies) so this
-     item's real content height counts toward .hero's own auto-sizing —
-     otherwise .hero never grows past min-height when content needs more. */
-  .hero-top { flex: 1 1 auto; align-items: center; }
-  .hero-cta-band { aspect-ratio: 2000 / 531; min-height: 0; flex-shrink: 0; }
+  .hero { height: 100vh; min-height: 620px; max-height: 1080px; }
+  .hero-top { flex: 1; align-items: flex-start; }
+  .hero-cta-band {
+    /* no z-index here on purpose: it must NOT establish its own stacking
+       context, or .hero-cta's z-index below would be trapped inside it and
+       could never actually out-rank the (possibly overlapping) text. */
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    aspect-ratio: 2000 / 531;
+    min-height: 0;
+  }
+  .hero .hero-tagline,
+  .hero p.desc {
+    text-shadow:
+      0 0 14px var(--bg),
+      0 0 14px var(--bg),
+      0 2px 6px var(--bg);
+  }
+  /* If overlapping text ever reaches this low, the buttons (with their own
+     solid backgrounds) still render on top and stay fully legible/clickable. */
+  .hero-cta { position: relative; z-index: 3; }
 }
 
 /* ==========================================================================
