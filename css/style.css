@@ -379,24 +379,23 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
 .scroll-cue .line { width: 1px; height: 46px; background: linear-gradient(var(--gold-light), transparent); animation: scrollcue 2s ease-in-out infinite; }
 @keyframes scrollcue { 0% { opacity: 0.2; } 50% { opacity: 1; } 100% { opacity: 0.2; } }
 
-/* Desktop: fit the whole hero (headline through the grass CTA band) within
-   one screen, roughly a 16:9–16:10 frame, instead of overflowing past the
-   fold on typical laptop/desktop window heights. */
+/* Desktop: fit the hero within one screen, roughly a 16:9-16:10 frame,
+   without shrinking the headline or cropping the grass image. The grass
+   band stays a normal (in-flow) flex sibling of the text block — sized by
+   its own true aspect ratio (2000x531), so it's always full width and
+   never cropped — and .hero uses min-height (not a fixed height), so its
+   real height is however tall the text + band actually need to be. On a
+   typical desktop window that sum is <=100vh and everything still fits in
+   exactly one screen; only on an unusually short window does the section
+   grow past 100vh (a small scroll to reach the grass) rather than the two
+   ever overlapping each other. */
 @media (min-width: 961px) {
-  .hero { height: 100vh; min-height: 620px; max-height: 1080px; }
-  /* min-height:0 lets this flex child actually shrink below its content's
-     natural size instead of forcing the section to overflow — combined with
-     vh-based clamps below so text/spacing scale down on shorter windows
-     rather than pushing the CTA buttons past the bottom edge. */
-  .hero-top { padding: clamp(20px, 5vh, 56px) 24px clamp(4px, 1.2vh, 12px); min-height: 0; }
-  .hero-mark { width: clamp(48px, 8vh, 76px); margin-bottom: clamp(8px, 2vh, 20px); }
-  .hero-eyebrow { margin-bottom: clamp(8px, 1.8vh, 16px); font-size: clamp(10px, 1.4vh, 12px); }
-  .hero h1 { font-size: clamp(32px, 8vh, 88px); }
-  .hero .hero-tagline { margin: clamp(8px, 1.6vh, 14px) 0; font-size: clamp(15px, 2.4vh, 25px); }
-  .hero p.desc { margin-bottom: clamp(10px, 1.8vh, 20px); font-size: clamp(12px, 1.5vh, 15.5px); line-height: 1.6; }
-  /* Height derives from the grass image's own ratio (2000x531) so it always
-     renders at 100% width with zero cropping and zero extra empty space. */
-  .hero-cta-band { min-height: 0; aspect-ratio: 2000 / 531; padding: clamp(10px, 2vh, 18px) 24px clamp(16px, 3vh, 28px); }
+  .hero { height: auto; min-height: 100vh; }
+  /* flex-basis:auto (not the 0% the "flex:1" shorthand implies) so this
+     item's real content height counts toward .hero's own auto-sizing —
+     otherwise .hero never grows past min-height when content needs more. */
+  .hero-top { flex: 1 1 auto; align-items: center; }
+  .hero-cta-band { aspect-ratio: 2000 / 531; min-height: 0; flex-shrink: 0; }
 }
 
 /* ==========================================================================
