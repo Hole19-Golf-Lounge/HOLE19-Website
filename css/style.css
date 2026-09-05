@@ -391,10 +391,16 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
   .hero { height: 100vh; min-height: 620px; max-height: 1080px; }
   .hero-top { flex: 1; align-items: flex-start; }
   .hero-cta-band {
-    /* no z-index here on purpose: it must NOT establish its own stacking
-       context, or .hero-cta's z-index below would be trapped inside it and
-       could never actually out-rank the (possibly overlapping) text. */
+    /* Explicitly z-index:auto — NOT omitted (the base rule's z-index:2 would
+       cascade in, tying with .hero-top and, per stacking rules, winning
+       because it's later in the DOM — exactly the "grass covers the text"
+       bug this caused once already) and NOT a numeric value either (any
+       number here, even 0, still creates a stacking context that traps
+       .hero-cta's z-index below and stops it from ever out-ranking the
+       text). auto is the only value that both clears the inherited 2 and
+       avoids creating a context. */
     position: absolute;
+    z-index: auto;
     left: 0; right: 0; bottom: 0;
     aspect-ratio: 2000 / 531;
     min-height: 0;
