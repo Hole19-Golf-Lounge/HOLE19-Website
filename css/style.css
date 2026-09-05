@@ -408,9 +408,17 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1
   .hero .hero-tagline,
   .hero p.desc {
     text-shadow:
-      0 0 14px var(--bg),
-      0 0 14px var(--bg),
-      0 2px 6px var(--bg);
+      0 0 4px var(--bg),
+      0 0 4px var(--bg),
+      0 0 4px var(--bg),
+      0 0 10px var(--bg),
+      0 0 10px var(--bg),
+      0 0 10px var(--bg),
+      0 0 22px var(--bg),
+      0 0 22px var(--bg),
+      0 0 22px var(--bg),
+      0 0 34px var(--bg),
+      0 0 34px var(--bg);
   }
   /* If overlapping text ever reaches this low, the buttons (with their own
      solid backgrounds) still render on top and stay fully legible/clickable. */
