@@ -289,4 +289,34 @@ document.addEventListener('DOMContentLoaded', () => {
   langEnBtn?.addEventListener('click', () => setLang('en'));
   langKoBtn?.addEventListener('click', () => setLang('ko'));
 
+  /* ---------- Online booking pop-up ---------- */
+  // The booking form is served by the booking server; it opens here in a frame, in the site's current language.
+  const BOOKING_URL = 'https://booking.hole19golflounge.com/book';
+  const bookingModal = document.getElementById('bookingModal');
+  const bookingFrame = document.getElementById('bookingFrame');
+  let lastFocus = null;
+
+  function openBooking(e) {
+    if (e) e.preventDefault();
+    const lang = document.documentElement.getAttribute('data-lang') === 'ko' ? 'ko' : 'en';
+    const src = `${BOOKING_URL}?embed=1&lang=${lang}`;
+    if (bookingFrame.dataset.src !== src) { bookingFrame.src = src; bookingFrame.dataset.src = src; }
+    document.getElementById('mobileNav')?.classList.remove('open');
+    lastFocus = document.activeElement;
+    bookingModal.hidden = false;
+    document.body.classList.add('booking-open');
+    bookingModal.querySelector('.booking-modal-close').focus();
+  }
+  function closeBooking() {
+    bookingModal.hidden = true;
+    document.body.classList.remove('booking-open');
+    lastFocus?.focus?.();
+  }
+  if (bookingModal && bookingFrame) {
+    document.querySelectorAll('[data-booking]').forEach((el) => el.addEventListener('click', openBooking));
+    bookingModal.querySelectorAll('[data-booking-close]').forEach((el) => el.addEventListener('click', closeBooking));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !bookingModal.hidden) closeBooking(); });
+    if (location.hash === '#book') openBooking(); // shareable link: hole19golflounge.com/#book
+  }
+
 });

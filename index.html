@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&family=Luckiest+Guy&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=66">
+<link rel="stylesheet" href="css/style.css?v=67">
 </head>
 <body>
 
@@ -87,7 +87,7 @@
         <button type="button" id="langEn" class="active">EN</button>
         <button type="button" id="langKo">KO</button>
       </div>
-      <a href="#visit" class="btn btn-gold"><span class="lang-en">Reserve</span><span class="lang-ko">예약</span></a>
+      <a href="https://booking.hole19golflounge.com/book" class="btn btn-gold" data-booking><span class="lang-en">Reserve</span><span class="lang-ko">예약</span></a>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -106,6 +106,7 @@
   <a href="#menu"><span class="lang-en">MENU</span><span class="lang-ko">메뉴</span></a>
   <a href="#reviews"><span class="lang-en">REVIEWS</span><span class="lang-ko">리뷰</span></a>
   <a href="#visit"><span class="lang-en">VISIT</span><span class="lang-ko">오시는길</span></a>
+  <a href="https://booking.hole19golflounge.com/book" class="btn btn-gold" data-booking><span class="lang-en">BOOK ONLINE</span><span class="lang-ko">온라인 예약</span></a>
 </div>
 
 <!-- ===================== HERO ===================== -->
@@ -133,7 +134,7 @@
   </div>
   <div class="hero-cta-band">
     <div class="hero-cta">
-      <a href="tel:+19297660088" class="btn btn-gold"><span class="lang-en">Book Now</span><span class="lang-ko">예약하기</span></a>
+      <a href="https://booking.hole19golflounge.com/book" class="btn btn-gold" data-booking><span class="lang-en">Book Now</span><span class="lang-ko">예약하기</span></a>
       <a href="#rates" class="btn btn-outline hill-btn"><span class="lang-en">Check Rates</span><span class="lang-ko">요금 확인</span></a>
     </div>
     <div class="scroll-cue"><span><span class="lang-en">SCROLL</span><span class="lang-ko">스크롤</span></span><span class="line"></span></div>
@@ -802,7 +803,10 @@
   <div class="container">
     <h2><span class="lang-en">Reserve Your Moment at HOLE19</span><span class="lang-ko">지금, HOLE19에서 특별한 순간을 예약하세요</span></h2>
     <p><span class="lang-en">From private bay reservations to group outings, we're always ready to welcome you.</span><span class="lang-ko">프라이빗 베이 예약부터 단체 모임까지 언제든 환영합니다.</span></p>
-    <a href="tel:+19297660088" class="btn btn-gold"><span class="lang-en">Call to Reserve</span><span class="lang-ko">전화로 예약하기</span></a>
+    <div class="cta-actions">
+      <a href="https://booking.hole19golflounge.com/book" class="btn btn-gold" data-booking><span class="lang-en">Book Online</span><span class="lang-ko">온라인 예약하기</span></a>
+      <a href="tel:+19297660088" class="btn btn-outline on-dark"><span class="lang-en">Call (929) 766-0088</span><span class="lang-ko">전화 예약 (929) 766-0088</span></a>
+    </div>
   </div>
 </section>
 
@@ -901,6 +905,21 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=14"></script>
+<!-- ===================== ONLINE BOOKING (pop-up) ===================== -->
+<!-- The form itself lives on the booking server (https://booking.hole19golflounge.com/book) and is shown here in a frame -->
+<div class="booking-modal" id="bookingModal" hidden>
+  <div class="booking-modal-backdrop" data-booking-close></div>
+  <div class="booking-modal-panel" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+    <div class="booking-modal-head">
+      <h2 id="bookingModalTitle"><span class="lang-en">Book Online</span><span class="lang-ko">온라인 예약</span></h2>
+      <button type="button" class="booking-modal-close" data-booking-close aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <iframe class="booking-modal-frame" id="bookingFrame" title="HOLE19 online booking" loading="lazy"></iframe>
+  </div>
+</div>
+
+<script src="js/main.js?v=15"></script>
 </body>
 </html>
