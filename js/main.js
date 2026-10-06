@@ -322,3 +322,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+
+/* ---------- Hero photo cross-dissolve (Bar -> Private room -> GDR) ---------- */
+(function () {
+  var wrap = document.getElementById('heroSlides');
+  if (!wrap) return;
+  var slides = Array.prototype.slice.call(wrap.children);
+  if (slides.length < 2) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var INTERVAL = 1000; // ms between photo changes
+  var i = 0;
+  setInterval(function () {
+    if (document.hidden) return;
+    var prev = slides[i];
+    i = (i + 1) % slides.length;
+    var next = slides[i];
+    slides.forEach(function (s) { if (s !== prev && s !== next) s.classList.remove('is-active', 'was-active'); });
+    prev.classList.remove('is-active');
+    prev.classList.add('was-active');
+    // restart the fade-in for the incoming photo
+    next.classList.remove('was-active');
+    void next.offsetWidth;
+    next.classList.add('is-active');
+  }, INTERVAL);
+})();
