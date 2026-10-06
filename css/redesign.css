@@ -64,7 +64,7 @@ html[data-lang="ko"] .section-title em { font-style: normal; }
   text-align: center;
 }
 .hero::before, .hero::after { display: none; }
-.hero-slides { position: absolute; inset: 0; overflow: hidden; }
+.hero-slides { position: absolute; inset: 0; overflow: hidden; z-index: 0; } /* own stacking context: keeps the slides' z-indexes inside, below the veil and text */
 .hero-slide {
   position: absolute; inset: 0;
   background-position: center 58%; background-size: cover; background-repeat: no-repeat;
@@ -73,11 +73,14 @@ html[data-lang="ko"] .section-title em { font-style: normal; }
 /* the incoming photo fades in on top while the outgoing one stays fully visible
    underneath, so the two overlap (a true cross-dissolve) instead of dipping to black */
 .hero-slide.was-active { opacity: 1; z-index: 1; }
-.hero-slide.is-active { opacity: 1; z-index: 2; transition: opacity var(--hero-fade, 0.95s) ease-in-out; }
+.hero-slide.is-active { opacity: 1; z-index: 2; transition: opacity var(--hero-fade, 1.4s) ease-in-out; }
 @media (prefers-reduced-motion: reduce) { .hero-slide.is-active { transition: none; } }
 .hero-veil {
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(8,18,10,0.58) 0%, rgba(8,18,10,0.30) 38%, rgba(8,18,10,0.78) 100%);
+  position: absolute; inset: 0; z-index: 1;
+  /* even dark wash + a soft darker pool behind the centred text, so the logo and copy stay legible on every photo */
+  background:
+    radial-gradient(ellipse 62% 58% at 50% 50%, rgba(6,14,8,0.42) 0%, rgba(6,14,8,0) 100%),
+    linear-gradient(180deg, rgba(8,18,10,0.66) 0%, rgba(8,18,10,0.52) 40%, rgba(8,18,10,0.84) 100%);
 }
 .hero-inner { position: relative; z-index: 2; max-width: 880px; padding: 150px 24px 120px; color: #fff; }
 .hero-eyebrow { color: var(--gold-light); letter-spacing: 0.44em; margin-bottom: 26px; font-size: 12px; }

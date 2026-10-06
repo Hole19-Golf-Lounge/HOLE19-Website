@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
   var slides = Array.prototype.slice.call(wrap.children);
   if (slides.length < 2) return;
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var INTERVAL = 1000; // ms between photo changes
+  var INTERVAL = 3000; // ms between photo changes
   var i = 0;
   setInterval(function () {
     if (document.hidden) return;
