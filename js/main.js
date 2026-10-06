@@ -378,3 +378,24 @@ document.addEventListener('DOMContentLoaded', () => {
     next.classList.add('is-active');
   }, INTERVAL);
 })();
+
+
+/* ---------- Photo pairs that cross-dissolve inside a section card ---------- */
+(function () {
+  document.querySelectorAll('.ad-photo.is-fade').forEach(function (box) {
+    var imgs = Array.prototype.slice.call(box.querySelectorAll('img'));
+    if (imgs.length < 2) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var gap = parseInt(box.getAttribute('data-fade-interval'), 10) || 3000;
+    var i = 0, inView = false;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { inView = e[0].isIntersecting; }, { threshold: 0.25 }).observe(box);
+    } else { inView = true; }
+    setInterval(function () {
+      if (!inView || document.hidden) return;
+      imgs[i].classList.remove('is-on');
+      i = (i + 1) % imgs.length;
+      imgs[i].classList.add('is-on');
+    }, gap);
+  });
+})();

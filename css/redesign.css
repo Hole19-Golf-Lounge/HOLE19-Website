@@ -142,6 +142,12 @@ h1, h2, h3, h4 { font-weight: 400; }
 .ad-photo { min-height: clamp(320px, 38vw, 520px); overflow: hidden; }
 .ad-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s ease; }
 .about-detail-item:hover .ad-photo img { transform: scale(1.04); }
+/* photo pair that cross-dissolves (01 Immersive Premium Golf: private room <-> GDR bay) */
+.ad-photo.is-fade { position: relative; }
+.ad-photo.is-fade img { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease-in-out; }
+.ad-photo.is-fade img.is-on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .ad-photo.is-fade img { transition: none; } }
+@media (max-width: 900px) { .ad-photo.is-fade { aspect-ratio: 16 / 9; min-height: 0; } }
 /* promo posters (coffee / draft / food): show the whole poster, uncropped, on its own background colour */
 .ad-photo.is-poster { display: flex; align-items: center; justify-content: center; background: var(--poster-bg, #000); }
 .ad-photo.is-poster img { height: auto; object-fit: contain; }
