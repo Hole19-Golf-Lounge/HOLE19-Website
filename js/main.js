@@ -2,7 +2,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- Promo popup (tournament poster) ---------- */
-  const promoModal = document.getElementById('promoModal');
+  // Tournament poster popup is switched off. To bring it back, set this to true.
+  const PROMO_ENABLED = false;
+  const promoModal = PROMO_ENABLED ? document.getElementById('promoModal') : null;
   const promoSnoozeKey = 'hole19_promo_snooze_until';
 
   if (promoModal) {
