@@ -324,26 +324,57 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-/* ---------- Hero photo cross-dissolve (Bar -> Private room -> GDR) ---------- */
+/* ---------- Hero photo cross-dissolve ----------
+   Always opens on the first photo (Bar); the rest are shuffled on every visit.
+   Photos 2+ are loaded after the page has finished loading, so the first paint
+   only needs Bar, and a photo is never shown before it has actually loaded. */
 (function () {
   var wrap = document.getElementById('heroSlides');
   if (!wrap) return;
-  var slides = Array.prototype.slice.call(wrap.children);
-  if (slides.length < 2) return;
+  var all = Array.prototype.slice.call(wrap.children);
+  if (all.length < 2) return;
+  var first = all[0];
+  var rest = all.slice(1);
+
+  // Fisher-Yates shuffle of everything after the first photo
+  for (var k = rest.length - 1; k > 0; k--) {
+    var r = Math.floor(Math.random() * (k + 1));
+    var tmp = rest[k]; rest[k] = rest[r]; rest[r] = tmp;
+  }
+  rest.forEach(function (el) { wrap.appendChild(el); });
+  var slides = [first].concat(rest);
+  first.dataset.ready = '1';
+
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function preload() {
+    rest.forEach(function (el, n) {
+      setTimeout(function () {
+        var img = new Image();
+        img.onload = function () { el.style.backgroundImage = 'url("' + el.dataset.bg + '")'; el.dataset.ready = '1'; };
+        img.src = el.dataset.bg;
+      }, n * 250);
+    });
+  }
+  if (document.readyState === 'complete') preload();
+  else window.addEventListener('load', preload);
+
   var INTERVAL = 3000; // ms between photo changes
   var i = 0;
   setInterval(function () {
     if (document.hidden) return;
+    // next photo in the shuffled order that has finished loading
+    var step = 1;
+    while (step < slides.length && slides[(i + step) % slides.length].dataset.ready !== '1') step++;
+    if (step >= slides.length) return;
     var prev = slides[i];
-    i = (i + 1) % slides.length;
+    i = (i + step) % slides.length;
     var next = slides[i];
     slides.forEach(function (s) { if (s !== prev && s !== next) s.classList.remove('is-active', 'was-active'); });
     prev.classList.remove('is-active');
     prev.classList.add('was-active');
-    // restart the fade-in for the incoming photo
     next.classList.remove('was-active');
-    void next.offsetWidth;
+    void next.offsetWidth;   // restart the fade-in
     next.classList.add('is-active');
   }, INTERVAL);
 })();
