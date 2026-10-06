@@ -83,7 +83,9 @@ html[data-lang="ko"] .section-title em { font-style: normal; }
   color: #fff;
   line-height: 1.05;
 }
-.hero h1 span { color: var(--gold-light); }
+.hero-mark { display: block; width: clamp(78px, 8vw, 104px); height: auto; margin: 0 auto 26px; filter: drop-shadow(0 8px 26px rgba(0,0,0,0.45)); }
+.hero h1 { line-height: 0; }
+.hero-wordmark { display: block; width: clamp(230px, 36vw, 470px); height: auto; margin: 0 auto; filter: drop-shadow(0 6px 22px rgba(0,0,0,0.4)); }
 .hero .hero-tagline {
   font-family: var(--font-head);
   font-weight: 300;
