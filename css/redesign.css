@@ -218,9 +218,10 @@ h1, h2, h3, h4 { font-weight: 400; }
 /* ---------- Visit: small staff characters tucked into the bottom-right ---------- */
 .visit-info { position: relative; }
 .visit-staff {
-  position: absolute; right: 4px; bottom: -34px;
-  height: clamp(150px, 15vw, 190px); width: auto;
+  position: absolute; right: 4px; bottom: -60px;
+  height: clamp(230px, 20vw, 300px); width: auto;   /* desktop */
   pointer-events: none; user-select: none;
   filter: drop-shadow(0 10px 14px rgba(40, 30, 14, 0.18));
 }
-@media (max-width: 900px) { .visit-staff { height: 132px; bottom: -22px; right: 0; } }
+@media (max-width: 1024px) { .visit-staff { height: 210px; bottom: -40px; } }          /* iPad / tablet */
+@media (max-width: 600px)  { .visit-staff { height: 132px; bottom: -22px; right: 0; } } /* phone (unchanged) */
