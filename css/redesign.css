@@ -225,3 +225,9 @@ h1, h2, h3, h4 { font-weight: 400; }
 }
 @media (max-width: 1024px) { .visit-staff { height: min(210px, calc(100% + 70px)); bottom: -40px; } }          /* iPad / tablet */
 @media (max-width: 600px)  { .visit-staff { height: 132px; bottom: -22px; right: 0; } } /* phone (unchanged) */
+
+/* Member Pass: four amounts stay on one line on phones */
+@media (max-width: 480px) {
+  .mp-amounts { font-size: 18px; white-space: nowrap; }
+  .mp-amounts em { margin: 0 3px; }
+}
