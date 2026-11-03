@@ -235,3 +235,6 @@ h1, h2, h3, h4 { font-weight: 400; }
 /* Membership cards: regular price, no discount */
 .ms-regular { font-family: var(--font-head); font-size: clamp(22px, 2.4vw, 28px); font-weight: 700; color: var(--gold-deep); }
 .ms-regular small { font-size: 0.5em; font-weight: 500; margin-left: 2px; }
+
+/* Rates footnote: small but readable on the ivory background */
+.rates-note { color: #6f6556; font-size: 12.5px; line-height: 1.6; padding: 0 12px; }
