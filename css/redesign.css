@@ -238,3 +238,12 @@ h1, h2, h3, h4 { font-weight: 400; }
 
 /* Rates footnote: small but readable on the ivory background */
 .rates-note { color: #6f6556; font-size: 12.5px; line-height: 1.6; padding: 0 12px; }
+
+/* ---------- Menu: price column + section notes (matches the printed menu) ---------- */
+.mi-top { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 6px; }
+.mi-top .mi-name { margin-bottom: 0; }
+.mi-price { flex: none; font-family: var(--font-head); font-size: 17px; font-weight: 600; color: var(--gold-deep); letter-spacing: 0; }
+.menu-subhead .sh-note { float: right; font-family: var(--font-head); font-size: 12px; letter-spacing: 0.02em; text-transform: none; color: var(--body); opacity: 0.8; }
+.menu-panel .menu-subhead { margin-top: 34px; }
+.menu-panel > .menu-subhead:first-child { margin-top: 4px; }
+.menu-item .mi-tag.mi-tag-new { margin-left: 6px; padding: 1px 7px; font-size: 8px; letter-spacing: 0.1em; white-space: nowrap; color: #fff; background: var(--gold); border-color: var(--gold); }
